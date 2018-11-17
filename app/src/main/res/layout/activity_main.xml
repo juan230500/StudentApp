@@ -10,6 +10,12 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Escanear"
+        android:onClick="Escanear"/>
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"

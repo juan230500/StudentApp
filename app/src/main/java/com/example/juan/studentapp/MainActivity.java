@@ -1,9 +1,6 @@
 package com.example.juan.studentapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +12,18 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Escaner escaner = new Escaner(this);
+
+    public void Escanear (){
+        escaner.EscanearBarras(escaner.getEscanerView());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        escaner.getEscanerView().stopCamera();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
