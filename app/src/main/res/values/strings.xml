@@ -24,4 +24,5 @@
         completions."
     </string>
     <string name="title_activity_login_linked_in">Login LinkedIn</string>
+    <string name="title_activity_codigo_barras">CodigoBarras</string>
 </resources>
