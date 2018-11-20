@@ -10,6 +10,16 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="132dp"
+        android:text="LOOOOOOL"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
