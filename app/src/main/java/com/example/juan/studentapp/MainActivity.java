@@ -11,8 +11,12 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView img;
-    private int y=0;
-    private int x=0;
+    private float y;
+    private float x;
+    private float xf;
+    private float yf;
+    private float m;
+    private float b;
     private Handler handler=new Handler();
     private Timer timer=new Timer();
 
@@ -24,19 +28,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void go(View view) {
+        y=100;
+        x=100;
+        xf=200;
+        yf=500;
+        m=(yf-y)/(xf-x);
+        b=y-m*x;
         //https://www.youtube.com/watch?v=UxbJKNjQWD8
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        x+=1;
-                        img.setX(x);
+                        if (x<xf){
+                            x+=2;
+                            y=x*m+b;
+                            img.setX(x);
+                            img.setY(y);
+                        }
                     }
                 });
             }
-        },0,5);
+        },0,50);
     }
 
 }
