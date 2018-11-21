@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
             haySeleccion= false;
             haySeleccion2= true;
         } else if (id == R.id.nav_facebook) {
-            seleccionado2 = new Intent(this, LoginFacebook.class);
+            seleccionado2 = new Intent(this, LoginActivity.class);
             haySeleccion = false;
             haySeleccion2= true;
         } else if (id == R.id.nav_linkedin) {
