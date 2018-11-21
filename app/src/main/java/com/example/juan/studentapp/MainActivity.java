@@ -21,6 +21,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,58 +50,61 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void go(View view) {
-        /*String REST_URI  = "http://192.168.100.4:8080/ServidorTEC/webapi/myresource/Mapa";
 
-        Client client = ClientBuilder.newClient();
-
-        String r=client
-                .target(REST_URI)
-                .request(MediaType.APPLICATION_JSON)
-                .get(String.class);
-        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);*/
-
-        String REST_URI  = "http://192.168.100.4:8080/ServidorTEC/webapi/myresource/Mapa";
+        String REST_URI  = "http://192.168.100.4:8080/ServidorTEC/webapi/myresource/Residencia";
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
-                new Response.Listener<String>() {
+                new Response.Listener<String>()
+                {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        Toast.makeText(getApplicationContext(),"Response :" + response.toString(), Toast.LENGTH_LONG).show();;
+                        // response
+                        Log.d("Response", response);
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                    }
+                }
+        ) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),"Response :" + error.toString(), Toast.LENGTH_LONG).show();
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Residencia", "1");
+
+                return params;
             }
-        });
-
-
+        };
         requestQueue.add(stringRequest);
 
+        REST_URI  = "http://192.168.100.4:8080/ServidorTEC/webapi/myresource/Mapa";
 
-
-
-
-
-
-
-        //https://www.youtube.com/watch?v=UxbJKNjQWD8
-        /*timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, REST_URI,
+                new Response.Listener<String>()
+                {
                     @Override
-                    public void run() {
-                        x+=1;
-                        img.setX(x);
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
                     }
-                });
-            }
-        },0,5);*/
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                    }
+                }
+        );
+
+
+        requestQueue.add(stringRequest2);
     }
 
 }
