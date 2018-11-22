@@ -26,63 +26,85 @@ import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 /*
+public void GoRegistro(View view){
+
+
+    }
+    public void GoCarpooling(View view){
+
+    }public void GoDesplazamiento(View view){
+
+    }public void GoCalificar(View view){
+
+    }public void GoCalificacion(View view){
+
+    }
+    public void GoAmigos(View view){
+
+    }
 <Button
-        android:id="@+id/button"
+        android:id="@+id/desplazamiento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="60dp"
         android:layout_marginBottom="52dp"
-        android:text="Button"
+        android:text="Desplazamiento"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/carpooling"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="60dp"
         android:layout_marginBottom="40dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:text="Carpooling"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/desplazamiento"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
+        android:layout_marginStart="60dp"
         android:layout_marginBottom="40dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        android:text="Regristro"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/carpooling"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/calificar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginBottom="40dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        android:text="Calificar"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/calificacion"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/calificacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginBottom="40dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
+        android:text="Calificación"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/amigos"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/amigos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginBottom="52dp"
-        android:text="Button"
+        android:text="Amigos"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
  */
