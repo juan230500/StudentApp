@@ -1,14 +1,15 @@
-package com.example.juan.studentapp;
+package com.example.juan.studentapp2;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,96 +19,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.zxing.Result;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
-/*
-public void GoRegistro(View view){
-
-
-    }
-    public void GoCarpooling(View view){
-
-    }public void GoDesplazamiento(View view){
-
-    }public void GoCalificar(View view){
-
-    }public void GoCalificacion(View view){
-
-    }
-    public void GoAmigos(View view){
-
-    }
-<Button
-        android:id="@+id/desplazamiento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="52dp"
-        android:text="Desplazamiento"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/carpooling"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="40dp"
-        android:text="Carpooling"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/desplazamiento"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/registro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="40dp"
-        android:text="Regristro"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/carpooling"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/calificar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="40dp"
-        android:text="Calificar"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/calificacion"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/calificacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="40dp"
-        android:text="Calificación"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/amigos"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/amigos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="52dp"
-        android:text="Amigos"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
- */
 
 public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
@@ -115,6 +40,8 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     private ZXingScannerView scannerView;
     private int codigoPermiso = 1;
     private boolean registrado = false;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
 
 
     public void Escanear(View view) {
@@ -169,6 +96,35 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_codigo_barras);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(getApplicationContext(),"Login existoso",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(),R.string.com_facebook_smart_login_confirmation_cancel,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Toast.makeText(getApplicationContext(),"Error en inicio de sesión",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void handleResult(Result result) {
@@ -267,3 +223,4 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     }
 
 }
+
