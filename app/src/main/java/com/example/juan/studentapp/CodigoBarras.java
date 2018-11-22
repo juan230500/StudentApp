@@ -17,17 +17,32 @@ import java.io.OutputStreamWriter;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+
     private String codigoBarras;
     private ZXingScannerView scannerView;
     private int codigoPermiso = 1;
+    private boolean registrado = false;
 
 
     public void Escanear(View view) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            this.scannerView = new ZXingScannerView(this);
-            setContentView(this.scannerView);
-            scannerView.setResultHandler(this);
-            scannerView.startCamera();
+            if (!registrado) {
+                this.scannerView = new ZXingScannerView(this);
+                setContentView(this.scannerView);
+                scannerView.setResultHandler(this);
+                scannerView.startCamera();
+                registrado = true;
+            } else {
+                new AlertDialog.Builder(this)
+                        .setTitle("Ya está registrado")
+                        .setMessage("El carné " + codigoBarras + " ya ha sido registrado")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+            }
         } else {
             pedirPermiso();
         }
