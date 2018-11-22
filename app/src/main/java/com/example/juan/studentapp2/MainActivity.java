@@ -17,9 +17,13 @@ public class MainActivity extends AppCompatActivity {
         Intent i=new Intent(getApplicationContext(),CodigoBarras.class);
         startActivity(i);
     }
-    public void carpooling(View view){
+    public void carpooling( View view){
+        Intent i=new Intent(getApplicationContext(),Carpooling.class);
+        startActivity(i);
 
     }public void desplazamiento(View view){
+        Intent i=new Intent(getApplicationContext(),Desplazamiento.class);
+        startActivity(i);
 
     }public void calificar(View view){
 
