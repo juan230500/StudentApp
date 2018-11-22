@@ -11,9 +11,19 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.zxing.Result;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.ResultHandler {
@@ -122,6 +132,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     }
 
     public void guardar(){
+        registrar();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Se ha registrado el carné");
         builder.setMessage(codigoBarras);
@@ -135,4 +146,41 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
             archivo_wr.close();
         } catch (IOException e){}
     }
+
+    public void registrar(){
+        Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_LONG);
+        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Carne";
+
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(CodigoBarras.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Carne", "" + codigoBarras);
+
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
 }
