@@ -35,7 +35,8 @@ import java.util.Map;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.ResultHandler {
-
+//F0pZY0ZUwMgxcRRn01KYFDJsyIg= esta es la clave
+    private String clave="F0pZY0ZUwMgxcRRn01KYFDJsyIg=";
     private String codigoBarras;
     private ZXingScannerView scannerView;
     private int codigoPermiso = 1;
