@@ -44,7 +44,8 @@
         </activity>
         <activity android:name=".CodigoBarras" />
         <activity android:name=".Carpooling" />
-        <activity android:name=".Desplazamiento"></activity>
+        <activity android:name=".Desplazamiento" />
+        <activity android:name=".ListaAmigos"></activity>
     </application>
 
 </manifest>

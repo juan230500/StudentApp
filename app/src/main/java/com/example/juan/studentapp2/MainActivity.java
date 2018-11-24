@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void amigos(View view){
-
+        Intent i=new Intent(getApplicationContext(),ListaAmigos.class);
+        startActivity(i);
     }
 }
