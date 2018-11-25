@@ -61,7 +61,7 @@ public class Carpooling extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carpooling);
         entrada=(EditText)findViewById(R.id.editText);
-        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Mapa";
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Mapa";
         RequestQueue requestQueue=Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
                 new Response.Listener<String>()
@@ -159,7 +159,7 @@ public class Carpooling extends AppCompatActivity {
                 Button28,Button29,Button30};
         //Toast.makeText(Carpooling.this,"hola"+B[2].getX(), Toast.LENGTH_LONG).show();
 
-        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Residencia";
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Residencia";
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
 

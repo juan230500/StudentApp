@@ -3,7 +3,11 @@ package com.example.juan.studentapp2;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,38 +35,48 @@ import java.util.ArrayList;
 
 public class ListaAmigos extends AppCompatActivity {
 
-    private ArrayList<Amigo> amigos = new ArrayList<Amigo>();
     private LinearLayout contenedor;
-    private String carne = "2018135360";
+    private String carne;
     private String ip = "192.168.100.12";
-    private ArrayList<String> carnes ;
-    private ArrayList<String> calif;
+    private String[] carnes ;
+    private String[] calif;
+    private TextView tv1;
+    private ListView lv1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_amigos);
-        this.contenedor = (LinearLayout)findViewById(R.id.lloCont);
-        carnes = new ArrayList<String>();
-        calif = new ArrayList<String>();
+        tv1 = (TextView)findViewById(R.id.tv1);
+        lv1 = (ListView)findViewById(R.id.lv1);
         getLista();
+        abrir();
 
 
 
     }
     public void mostrarAmigos (){
-        int index = 0;
-        for (String b: carnes){
-            Double num1 = (Double.parseDouble(calif.get(index))) * 0.01;
-            TextView txt = new TextView(this);
-            txt.setText(b + "\n" + num1.toString());
-            txt.setBackgroundColor(Color.parseColor("#e1e1e1"));
-            txt.setTextColor(Color.parseColor("#000000"));
-            txt.setTextSize(26);
-            contenedor.addView(txt);
-            index ++;
-        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_amigos, carnes);
+        lv1.setAdapter(adapter);
+
+        lv1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                double Calificacion=Double.parseDouble(calif[i])/100;
+                tv1.setText("La calificion de " + lv1.getItemAtPosition(i) + " es " + Calificacion);
+            }
+        });
+
     }
+
+    public void abrir(){
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            carne = br.readLine();
+        } catch (IOException e){}
+    }
+
     public void getLista (){
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
@@ -70,14 +87,9 @@ public class ListaAmigos extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        //Toast.makeText(ListaAmigos.this, "Response " + response, Toast.LENGTH_LONG).show();
-
-
-
                         parsear(response);
                         mostrarAmigos();
 
-                        //Toast.makeText(ListaAmigos.this, jobject.toString(), Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener()
@@ -111,16 +123,19 @@ public class ListaAmigos extends AppCompatActivity {
 
             JsonArray amigs = details.getAsJsonArray("Amigos");
 
+            carnes=new String[amigs.size()];
+            calif=new String[amigs.size()];
+
             for (int i = 0; i < amigs.size(); i++) {
                 JsonPrimitive value = amigs.get(i).getAsJsonPrimitive();
-                carnes.add(value.getAsString());
+                carnes[i]=value.getAsString();
             }
 
             JsonArray calificaciones = details.getAsJsonArray("Calificaciones");
 
             for (int i = 0; i < calificaciones.size(); i++) {
                 JsonPrimitive value = calificaciones.get(i).getAsJsonPrimitive();
-                calif.add(value.getAsString());
+                calif[i]=value.getAsString();
                 //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
             }
         }
