@@ -188,9 +188,9 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
 
     public void registrar(){
         Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_LONG);
-        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Carne";
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
+        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Carne";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
                 new Response.Listener<String>()
