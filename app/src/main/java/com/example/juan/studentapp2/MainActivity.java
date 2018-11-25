@@ -82,6 +82,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void calificacion(View view){
 
+        if (true){
+            Intent i=new Intent(getApplicationContext(),Calificacion.class);
+            i.putExtra("Carnet",Carnet);
+            startActivity(i);
+        }
+        else {
+            Toast toast1 =
+                    Toast.makeText(getApplicationContext(),
+                            "Por favor registrese primero", Toast.LENGTH_SHORT);
+
+            toast1.show();
+        }
+
     }
 
     public void amigos(View view){
