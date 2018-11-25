@@ -388,6 +388,7 @@ public class Carpooling extends AppCompatActivity {
                         else{
                             Toast.makeText(Carpooling.this,"ASIGNADO"+response, Toast.LENGTH_SHORT).show();
                             parsear(response);
+                            go(Ruta,Tiempos);
                         }
 
 
