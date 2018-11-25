@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void carpooling(View view){
         if (registroCarnet&&regsitroFacebook){
-            Intent i=new Intent(getApplicationContext(),Carpooling.class);
+            Intent i=new Intent(getApplicationContext(),OpcionesViaje.class);
             i.putExtra("Carnet",Carnet);
             startActivity(i);
         }
