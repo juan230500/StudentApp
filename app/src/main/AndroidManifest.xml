@@ -49,6 +49,8 @@
         <activity android:name=".Top5" />
         <activity android:name=".Calificacion" />
         <activity android:name=".Calificar"></activity>
+        <activity android:name=".OpcionesViaje">
+        </activity>
     </application>
 
 </manifest>
