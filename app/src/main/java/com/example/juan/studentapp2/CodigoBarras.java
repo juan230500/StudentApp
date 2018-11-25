@@ -45,7 +45,6 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
-
     public void Escanear(View view) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             if (!registrado) {
@@ -189,6 +188,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
         Intent i=new Intent(getApplicationContext(),MainActivity.class);
         i.putExtra("RegistroCarnet",registrado);
         i.putExtra("RegistroFace",registradoFacebook);
+        i.putExtra("Carnet",codigoBarras);
         startActivity(i);
     }
 

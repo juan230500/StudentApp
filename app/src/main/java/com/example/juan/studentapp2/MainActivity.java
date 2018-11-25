@@ -25,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras=getIntent().getExtras();
         registroCarnet=extras.getBoolean("RegistroCarnet");
         regsitroFacebook=extras.getBoolean("RegistroFace");
-
+        Carnet=extras.getString("Carnet");
     }
     public void carpooling( View view){
         if (registroCarnet&&regsitroFacebook){
             Intent i=new Intent(getApplicationContext(),Carpooling.class);
+            i.putExtra("Carnet",Carnet);
             startActivity(i);
         }
         else {
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (registroCarnet&&regsitroFacebook){
             Intent i=new Intent(getApplicationContext(),Desplazamiento.class);
+            i.putExtra("Carnet",Carnet);
             startActivity(i);
         }
         else {
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (registroCarnet&&regsitroFacebook){
             Intent i=new Intent(getApplicationContext(),ListaAmigos.class);
+            i.putExtra("Carnet",Carnet);
             startActivity(i);
         }
         else {

@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Carpooling extends AppCompatActivity {
-
+    private String Carnet="";
     private EditText entrada;
     private Button Button0;
     private Button Button1;
@@ -61,38 +61,6 @@ public class Carpooling extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carpooling);
         entrada=(EditText)findViewById(R.id.editText);
-        /*Button0=(Button)findViewById(R.id.button0);
-        Button1=(Button)findViewById(R.id.button1);
-        Button2=(Button)findViewById(R.id.button2);
-        Button3=(Button)findViewById(R.id.button3);
-        Button4=(Button)findViewById(R.id.button4);
-        Button5=(Button)findViewById(R.id.button5);
-        Button6=(Button)findViewById(R.id.button6);
-        Button7=(Button)findViewById(R.id.button7);
-        Button8=(Button)findViewById(R.id.button8);
-        Button9=(Button)findViewById(R.id.button9);
-        Button10=(Button)findViewById(R.id.button10);
-        Button11=(Button)findViewById(R.id.button11);
-        Button12=(Button)findViewById(R.id.button12);
-        Button13=(Button)findViewById(R.id.button13);
-        Button14=(Button)findViewById(R.id.button14);
-        Button15=(Button)findViewById(R.id.button15);
-        Button16=(Button)findViewById(R.id.button16);
-        Button17=(Button)findViewById(R.id.button17);
-        Button18=(Button)findViewById(R.id.button18);
-        Button19=(Button)findViewById(R.id.button19);
-        Button20=(Button)findViewById(R.id.button20);
-        Button21=(Button)findViewById(R.id.button21);
-        Button22=(Button)findViewById(R.id.button22);
-        Button23=(Button)findViewById(R.id.button23);
-        Button24=(Button)findViewById(R.id.button24);
-        Button25=(Button)findViewById(R.id.button25);
-        Button26=(Button)findViewById(R.id.button26);
-        Button27=(Button)findViewById(R.id.button27);
-        Button28=(Button)findViewById(R.id.button28);
-        Button29=(Button)findViewById(R.id.button29);
-        Button30=(Button)findViewById(R.id.button30);*/
-
         String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Mapa";
         RequestQueue requestQueue=Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
@@ -118,6 +86,7 @@ public class Carpooling extends AppCompatActivity {
                 }
         );
         requestQueue.add(stringRequest);
+        recibirDatos();
     }
     /*
     1.Registrar residencia
@@ -125,6 +94,10 @@ public class Carpooling extends AppCompatActivity {
     3.arrays con xy de los nodos
     4.Bitacora XD
      */
+    public void recibirDatos(){
+        Bundle extras=getIntent().getExtras();
+        Carnet=extras.getString("Carnet");
+    }
     public void giveMeConexiones(View view){
         int  response=Mapa[1][1];
         if (!entrada.getText().equals("")){
