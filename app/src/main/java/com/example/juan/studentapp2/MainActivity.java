@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private boolean registroCarnet=false;
-    private boolean regsitroFacebook=false;
+    private boolean registroCarnet=true;
+    private boolean regsitroFacebook=true;
     private String Carnet="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void amigos(View view){
-
+        Intent i=new Intent(getApplicationContext(),ListaAmigos.class);
+        i.putExtra("Carnet",Carnet);
+        startActivity(i);
         if (registroCarnet&&regsitroFacebook){
-            Intent i=new Intent(getApplicationContext(),ListaAmigos.class);
-            i.putExtra("Carnet",Carnet);
-            startActivity(i);
+
         }
         else {
             Toast toast1 =
