@@ -17,6 +17,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -77,6 +82,9 @@ public class Carpooling extends AppCompatActivity {
     private int posActual;
     private String viaje;
     private String carne;
+    private String Conductor;
+    private int[] Ruta;
+    private int[] Tiempos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -379,6 +387,7 @@ public class Carpooling extends AppCompatActivity {
                         }
                         else{
                             Toast.makeText(Carpooling.this,"ASIGNADO"+response, Toast.LENGTH_SHORT).show();
+                            parsear(response);
                         }
 
 
@@ -407,5 +416,36 @@ public class Carpooling extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
 
+    }
+
+    public void parsear(String response){
+        JsonParser parser = new JsonParser();
+        JsonElement rootNode = parser.parse(response);
+
+
+        if (rootNode.isJsonObject()) {
+            JsonObject details = rootNode.getAsJsonObject();
+
+            JsonElement conductor=details.get("Conductor");
+            Conductor=conductor.getAsString();
+
+            JsonArray RutaDetails = details.getAsJsonArray("Ruta");
+
+            Ruta=new int[RutaDetails.size()];
+            Tiempos=new int[RutaDetails.size()];
+
+            for (int i = 0; i < RutaDetails.size(); i++) {
+                JsonPrimitive value = RutaDetails.get(i).getAsJsonPrimitive();
+                Ruta[i]=value.getAsInt();
+            }
+
+            JsonArray TiemposDetails = details.getAsJsonArray("Tiempos");
+
+            for (int i = 0; i < TiemposDetails.size(); i++) {
+                JsonPrimitive value = TiemposDetails.get(i).getAsJsonPrimitive();
+                Tiempos[i]=value.getAsInt();
+            }
+
+        }
     }
 }
