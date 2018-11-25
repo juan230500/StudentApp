@@ -14,16 +14,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Calificar extends AppCompatActivity {
     private RatingBar Calificacion;
+    private String conductor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calificar);
+        abrirConductor();
         Calificacion = (RatingBar) findViewById(R.id.ratingBar);
     }
 
@@ -65,12 +70,20 @@ public class Calificar extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Carne", "" + 2018319311);
+                params.put("Carne", "" + conductor);
                 params.put("Calificacion", "" + Calificacion.getRating());
                 return params;
             }
         };
 
         requestQueue.add(stringRequest);
+    }
+
+    public void abrirConductor(){
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("miconductor.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            conductor = br.readLine();
+        } catch (IOException e){}
     }
 }

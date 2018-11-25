@@ -1,5 +1,6 @@
 package com.example.juan.studentapp2;
 
+import android.app.Activity;
 import android.graphics.PointF;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -26,6 +27,7 @@ import com.google.gson.JsonPrimitive;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -82,7 +84,7 @@ public class Carpooling extends AppCompatActivity {
     private int posActual;
     private String viaje;
     private String carne;
-    private String Conductor;
+    private String conductor;
     private int[] Ruta;
     private int[] Tiempos;
     @Override
@@ -428,7 +430,8 @@ public class Carpooling extends AppCompatActivity {
             JsonObject details = rootNode.getAsJsonObject();
 
             JsonElement conductor=details.get("Conductor");
-            Conductor=conductor.getAsString();
+            this.conductor=conductor.getAsString();
+            guardarConductor();
 
             JsonArray RutaDetails = details.getAsJsonArray("Ruta");
 
@@ -448,5 +451,14 @@ public class Carpooling extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void guardarConductor(){
+        try {
+            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miconductor.txt", Activity.MODE_PRIVATE));
+            archivo_wr.write(conductor);
+            archivo_wr.flush();
+            archivo_wr.close();
+        } catch (IOException e){}
     }
 }
