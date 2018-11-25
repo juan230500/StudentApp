@@ -1,6 +1,7 @@
 package com.example.juan.studentapp2;
 
 import android.graphics.PointF;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -71,11 +75,16 @@ public class Carpooling extends AppCompatActivity {
     private Button[]botones;
     int posicionLugar;
     private int posActual;
+    private String viaje;
+    private String carne;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carpooling);
         entrada=(EditText)findViewById(R.id.editText);
+        abrir();
+        Toast.makeText(Carpooling.this,
+                "Preferencia de viaje: "+viaje+", Carne: "+carne, Toast.LENGTH_SHORT).show();
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Mapa";
         RequestQueue requestQueue=Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
@@ -257,6 +266,19 @@ public class Carpooling extends AppCompatActivity {
             }
         },0,50);
     }
+    public void abrir(){
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            carne = br.readLine();
+        } catch (IOException e){}
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("miviajeS.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            viaje = br.readLine();
+        } catch (IOException e){}
+    }
+
     public void SentGPS(View view){
        /* Button0=(Button)findViewById(R.id.button0);
         Button1=(Button)findViewById(R.id.button1);
@@ -295,7 +317,7 @@ public class Carpooling extends AppCompatActivity {
                 Button28,Button29,Button30};*/
         //Toast.makeText(Carpooling.this,"hola"+B[2].getX(), Toast.LENGTH_LONG).show();
 
-        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Residencia";
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Espera";
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
 
@@ -305,8 +327,8 @@ public class Carpooling extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Toast.makeText(Carpooling.this,
-                                "Sent ###"+entrada.getText()+response, Toast.LENGTH_LONG).show();
+                        Toast.makeText(Carpooling.this,response, Toast.LENGTH_LONG).show();
+                        ConsultarEspera();
                     }
                 },
                 new Response.ErrorListener()
@@ -323,7 +345,62 @@ public class Carpooling extends AppCompatActivity {
             {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Residencia", ""+entrada.getText());
-                params.put("Carne","2018135360");
+                params.put("Carne",carne);
+                params.put("SoloAmigos",viaje);
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+
+    }
+
+    public void ConsultarEspera(){
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/SeguirEsperando";
+
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(final String response) {
+                        if (response.length() < 2) {
+                            new CountDownTimer(1000, 1000) {
+
+                                public void onTick(long millisUntilFinished) {
+
+                                }
+                                public void onFinish() {
+                                    ConsultarEspera();
+                                }
+                            }.start();
+
+                        }
+                        else{
+                            Toast.makeText(Carpooling.this,"ASIGNADO"+response, Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Carpooling.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Carne",carne);
+                params.put("SoloAmigos",viaje);
 
                 return params;
             }

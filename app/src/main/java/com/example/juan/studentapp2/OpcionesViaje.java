@@ -37,7 +37,7 @@ public class OpcionesViaje extends AppCompatActivity {
             archivo_wr.close();
         } catch (IOException e){}
     }
-    public void guardarCA(View view){
+    public void guardarCE(View view){
         Toast.makeText(this, "Ha seleccionado viaje con un estudiante cualquiera.", Toast.LENGTH_SHORT).show();
         try {
             OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviajeS.txt", Activity.MODE_PRIVATE));
@@ -49,7 +49,7 @@ public class OpcionesViaje extends AppCompatActivity {
         i.putExtra("Carnet",Carnet);
         startActivity(i);
     }
-    public void guardarCE(View view){
+    public void guardarCA(View view){
         Toast.makeText(this, "Ha seleccionado viaje con un amigo.", Toast.LENGTH_SHORT).show();
         try {
             OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviajeS.txt", Activity.MODE_PRIVATE));

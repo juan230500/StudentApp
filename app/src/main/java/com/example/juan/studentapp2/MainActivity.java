@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void carpooling(View view){
-        if (registroCarnet&&regsitroFacebook){
+        if (true){
             Intent i=new Intent(getApplicationContext(),OpcionesViaje.class);
             i.putExtra("Carnet",Carnet);
             startActivity(i);
