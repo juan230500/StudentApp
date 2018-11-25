@@ -41,6 +41,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     private ZXingScannerView scannerView;
     private int codigoPermiso = 1;
     private boolean registrado = false;
+    private boolean registradoFacebook=false;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
@@ -108,13 +109,12 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(getApplicationContext(),"Login existoso",Toast.LENGTH_LONG).show();
+                registradoFacebook=true;
             }
-
             @Override
             public void onCancel() {
                 Toast.makeText(getApplicationContext(),R.string.com_facebook_smart_login_confirmation_cancel,Toast.LENGTH_LONG).show();
             }
-
             @Override
             public void onError(FacebookException exception) {
                 Toast.makeText(getApplicationContext(),"Error en inicio de sesión",Toast.LENGTH_LONG).show();
@@ -127,7 +127,6 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
-
     public void handleResult(Result result) {
         scannerView.stopCamera();
         setContentView(R.layout.activity_codigo_barras);
@@ -185,6 +184,12 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
             archivo_wr.flush();
             archivo_wr.close();
         } catch (IOException e){}
+    }
+    public void regresarPantallaInicio(View view){
+        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+        i.putExtra("RegistroCarnet",registrado);
+        i.putExtra("RegistroFace",registradoFacebook);
+        startActivity(i);
     }
 
     public void registrar(){
