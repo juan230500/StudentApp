@@ -47,7 +47,8 @@
         <activity android:name=".Desplazamiento" />
         <activity android:name=".ListaAmigos" />
         <activity android:name=".Top5" />
-        <activity android:name=".Calificacion"></activity>
+        <activity android:name=".Calificacion" />
+        <activity android:name=".Calificar"></activity>
     </application>
 
 </manifest>

@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calificar(View view){
-        Intent i = new Intent(getApplicationContext(),Calificacion.class);
+        Intent i = new Intent(getApplicationContext(),Calificar.class);
         startActivity(i);
     }
 
