@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity
         Boolean haySeleccion= true;
         Boolean haySeleccion2= false;
 
+        if (id == R.id.action_carpooling) {
+            seleccionado = new Viaje();
+            haySeleccion = true;
+            haySeleccion2= false;        }
         if (id == R.id.nav_inicio) {
             seleccionado = new Mapa();
             haySeleccion = true;
