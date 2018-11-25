@@ -10,7 +10,7 @@
         android:id="@+id/desplazamiento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="61dp"
+        android:layout_marginStart="36dp"
         android:layout_marginBottom="52dp"
         android:onClick="desplazamiento"
         android:text="Desplazamiento"
@@ -20,9 +20,9 @@
 
     <Button
         android:id="@+id/carpooling"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_width="110dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="36dp"
         android:layout_marginBottom="40dp"
         android:onClick="carpooling"
         android:text="Carpooling"
@@ -34,20 +34,22 @@
         android:id="@+id/registro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
         android:onClick="registro"
         android:text="Regristro"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/carpooling"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/calificar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="28dp"
         android:onClick="calificar"
         android:text="Calificar"
         android:textSize="14sp"
@@ -102,5 +104,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/carpooling_icon" />
+
+    <Button
+        android:id="@+id/top5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="top5"
+        android:text="Top 5"
+        app:layout_constraintEnd_toStartOf="@+id/calificar"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/registro"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </android.support.constraint.ConstraintLayout>

@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void registro(View view){
-        Intent i=new Intent(getApplicationContext(),CodigoBarras.class);
+        Intent i = new Intent(getApplicationContext(),CodigoBarras.class);
         startActivity(i);
     }
     public void recibirDatos(){
@@ -27,7 +27,23 @@ public class MainActivity extends AppCompatActivity {
         regsitroFacebook=extras.getBoolean("RegistroFace");
         Carnet=extras.getString("Carnet");
     }
-    public void carpooling( View view){
+
+    public void top5(View view) {
+        Intent i = new Intent(getApplicationContext(), Top5.class);
+        i.putExtra("Carnet", Carnet);
+        startActivity(i);
+        if (registroCarnet && regsitroFacebook) {
+
+        } else {
+            Toast toast1 =
+                    Toast.makeText(getApplicationContext(),
+                            "Por favor registrese primero", Toast.LENGTH_SHORT);
+
+            toast1.show();
+        }
+    }
+
+    public void carpooling(View view){
         if (registroCarnet&&regsitroFacebook){
             Intent i=new Intent(getApplicationContext(),Carpooling.class);
             i.putExtra("Carnet",Carnet);
@@ -41,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
             toast1.show();
         }
 
-    }public void desplazamiento(View view){
+    }
+
+    public void desplazamiento(View view){
 
         if (registroCarnet&&regsitroFacebook){
             Intent i=new Intent(getApplicationContext(),Desplazamiento.class);
@@ -56,11 +74,16 @@ public class MainActivity extends AppCompatActivity {
             toast1.show();
         }
 
-    }public void calificar(View view){
+    }
 
-    }public void calificacion(View view){
+    public void calificar(View view){
 
     }
+
+    public void calificacion(View view){
+
+    }
+
     public void amigos(View view){
         Intent i=new Intent(getApplicationContext(),ListaAmigos.class);
         i.putExtra("Carnet",Carnet);
