@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(), Top5.class);
         i.putExtra("Carnet", Carnet);
         startActivity(i);
-        if (registroCarnet && regsitroFacebook) {
+        if (true) {
 
         } else {
             Toast toast1 =
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void carpooling(View view){
-        if (registroCarnet&&regsitroFacebook){
+        if (true){
             Intent i=new Intent(getApplicationContext(),Carpooling.class);
             i.putExtra("Carnet",Carnet);
             startActivity(i);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void desplazamiento(View view){
 
-        if (registroCarnet&&regsitroFacebook){
+        if (true){
             Intent i=new Intent(getApplicationContext(),Desplazamiento.class);
             i.putExtra("Carnet",Carnet);
             startActivity(i);
