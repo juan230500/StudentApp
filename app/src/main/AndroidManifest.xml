@@ -35,7 +35,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,13 +46,11 @@
         </activity>
         <activity android:name=".CodigoBarras" />
         <activity android:name=".Carpooling" />
-        <activity android:name=".Desplazamiento" />
         <activity android:name=".ListaAmigos" />
         <activity android:name=".Top5" />
         <activity android:name=".Calificacion" />
-        <activity android:name=".Calificar"></activity>
-        <activity android:name=".OpcionesViaje">
-        </activity>
+        <activity android:name=".Calificar" />
+        <activity android:name=".OpcionesViaje"></activity>
     </application>
 
 </manifest>

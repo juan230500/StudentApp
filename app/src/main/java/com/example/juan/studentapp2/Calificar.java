@@ -52,7 +52,7 @@ public class Calificar extends AppCompatActivity {
      * @param view este corresponde al view de la aplicación
      */
     public void regresar(View view) {
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(getApplicationContext(), Main2Activity.class);
         startActivity(i);
     }
 

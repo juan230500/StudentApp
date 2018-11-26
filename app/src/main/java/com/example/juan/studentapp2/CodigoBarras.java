@@ -205,7 +205,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
      * @param view este corresponde al view de la aplicación
      */
     public void regresarPantallaInicio(View view){
-        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+        Intent i=new Intent(getApplicationContext(),Main2Activity.class);
         i.putExtra("RegistroCarnet",registrado);
         i.putExtra("RegistroFace",registradoFacebook);
         i.putExtra("Carnet",codigoBarras);

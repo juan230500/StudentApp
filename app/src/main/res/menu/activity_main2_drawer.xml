@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+        <item
+            android:id="@+id/carpooling"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Carpooling" />
+        <item
+            android:id="@+id/registro"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Registro" />
+        <item
+            android:id="@+id/calificar"
+            android:icon="@drawable/ic_inicio"
+            android:title="Calificar" />
+        <item
+            android:id="@+id/amigos"
+            android:icon="@drawable/ic_calificacion"
+            android:title="Lista de amigos" />
+        <item
+            android:id="@+id/top5"
+            android:icon="@drawable/ic_inicio"
+            android:title="Top 5" />
+        <item
+            android:id="@+id/calificacion"
+            android:icon="@drawable/ic_calificacion"
+            android:title="Calificación" />
+
+</menu>
