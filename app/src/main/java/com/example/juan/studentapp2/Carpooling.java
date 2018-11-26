@@ -416,7 +416,7 @@ public class Carpooling extends AppCompatActivity {
             {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Pos", ""+Ruta[i-1]);
-                params.put("Carne",carne);
+                params.put("Carne",conductor);
 
                 return params;
             }
