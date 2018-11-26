@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -87,12 +89,15 @@ public class Carpooling extends AppCompatActivity {
     private String conductor;
     private int[] Ruta;
     private int[] Tiempos;
+    private int sumador;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carpooling);
         entrada=(EditText)findViewById(R.id.editText);
         abrir();
+
         Toast.makeText(Carpooling.this,
                 "Preferencia de viaje: "+viaje+", Carne: "+carne, Toast.LENGTH_SHORT).show();
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Mapa";
@@ -107,7 +112,7 @@ public class Carpooling extends AppCompatActivity {
                         Mapa=gson.fromJson(response,int[][].class);
                         Matriz=response;
                         Toast.makeText(Carpooling.this,
-                                "Sent "+response, Toast.LENGTH_LONG).show();
+                                "Mapa cargado exitosamente", Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener()
@@ -120,7 +125,6 @@ public class Carpooling extends AppCompatActivity {
                 }
         );
         requestQueue.add(stringRequest);
-        recibirDatos();
         img=(Button)findViewById(R.id.buttonCarro);
         Button0=(Button)findViewById(R.id.button0);
         Button1=(Button)findViewById(R.id.button1);
@@ -158,17 +162,9 @@ public class Carpooling extends AppCompatActivity {
                 Button19,Button20,Button21,Button22,Button23,Button24,Button25,Button26,Button27,
                 Button28,Button29,Button30};
           botones=B;
+        img.setText("CHOFER");
     }
-    /*
-    1.Registrar residencia
-    2.Toast con caminos por el mapa
-    3.arrays con xy de los nodos
-    4.Bitacora XD
-     */
-    public void recibirDatos(){
-        Bundle extras=getIntent().getExtras();
-        Carnet=extras.getString("Carnet");
-    }
+
     public void giveMeConexiones(View view){
         int  response=Mapa[1][1];
         if (!entrada.getText().equals("")){
@@ -191,91 +187,7 @@ public class Carpooling extends AppCompatActivity {
                     "Porfa llene el espacio de texto", Toast.LENGTH_LONG).show();
         }
     }
-    public void prueba(View view){
-        int Tiempos[]={1,9,3,0};
-        int Rutas[]={23,12,1,0};
-        go(Rutas,Tiempos);
-    }
-    public int calcularSumando(float posInicial,float posFinal,int tiempo){
 
-        if (posFinal>posInicial){
-            return 10-tiempo;
-        }
-        else{
-            return -10+tiempo;
-        }
-    }
-
-
-    public void go( final int lugares[],final int tiempos[]) {
-        posicionLugar=0;
-        posActual=lugares[posicionLugar];
-        y = botones[posActual].getY();
-        x=botones[posActual].getX();
-        xf=botones[lugares[posicionLugar+1]].getX();
-        yf=botones[lugares[posicionLugar+1]].getY();
-        m=(yf-y)/(xf-x);
-        b=y-m*x;
-        Toast toast1 =
-                Toast.makeText(getApplicationContext(),
-                        "buton inicio"+botones[posActual].getText()+"el y es"+botones[posActual].getY(), Toast.LENGTH_SHORT);
-
-        toast1.show();
-        //https://www.youtube.com/watch?v=UxbJKNjQWD8
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (posicionLugar<lugares.length-1){
-                            if (Math.abs(xf-x)>10){
-                                x+=calcularSumando(x,xf,tiempos[posicionLugar]);
-                                y=x*m+b;
-                                img.setX(x);
-                                img.setY(y);
-                                PointF pointA = new PointF(img.getX()+25, img.getY()+25);
-                                PointF pointB = new PointF(xf, yf);
-                                linea=(LineView) findViewById(R.id.lineView);
-                                linea.setPointA(pointA);
-                                linea.setPointB(pointB);
-                                linea.draw();
-                            }
-                            else if(posicionLugar+1<lugares.length-1){
-                                PointF pointA = new PointF(0, 0);
-                                PointF pointB = new PointF(0, 0);
-                                linea=(LineView) findViewById(R.id.lineView);
-                                linea.setPointA(pointA);
-                                linea.setPointB(pointB);
-                                linea.draw();
-                                posicionLugar=posicionLugar+1;
-                                posActual=lugares[posicionLugar];
-                                y = botones[posActual].getY();
-                                x=botones[posActual].getX();
-                                xf=botones[lugares[posicionLugar+1]].getX();
-                                yf=botones[lugares[posicionLugar+1]].getY();
-                                m=(yf-y)/(xf-x);
-                                b=y-m*x;
-
-                            }
-                            else{
-                                PointF pointA = new PointF(0, 0);
-                                PointF pointB = new PointF(0, 0);
-                                linea=(LineView) findViewById(R.id.lineView);
-                                linea.setPointA(pointA);
-                                linea.setPointB(pointB);
-                                linea.draw();
-
-                            }
-
-                        }
-
-
-                    }
-                });
-            }
-        },0,50);
-    }
     public void abrir(){
         try {
             InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
@@ -389,8 +301,10 @@ public class Carpooling extends AppCompatActivity {
                         }
                         else{
                             Toast.makeText(Carpooling.this,"ASIGNADO"+response, Toast.LENGTH_SHORT).show();
-                            parsear(response);
-                            go(Ruta,Tiempos);
+                            parsear(response,true);
+                            x=botones[Ruta[0]].getX();
+                            y=botones[Ruta[0]].getY();
+                            go2(1);
                         }
 
 
@@ -421,7 +335,96 @@ public class Carpooling extends AppCompatActivity {
 
     }
 
-    public void parsear(String response){
+    public void go2(final int i){
+        xf=botones[Ruta[i]].getX();
+        yf=botones[Ruta[i]].getY();
+        m=(yf-y)/(xf-x);
+        b=y-m*x;
+        if (x-xf<0){
+            sumador=2;
+        }
+        else{
+            sumador=-2;
+        }
+        xf+=sumador*5;
+        double hipo=Math.sqrt((x-xf)*(x-xf)+(y-yf)*(y-yf));
+        int t=Tiempos[i-1]*1000;
+        int velocidad= (int) ((2*t)/hipo);
+
+        //https://www.youtube.com/watch?v=UxbJKNjQWD8
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Math.abs(x-xf)>10){
+                            x+=sumador;
+                            y=x*m+b;
+                            img.setX(x);
+                            img.setY(y);
+                        }
+                        else{
+                            timer.cancel();
+                            timer.purge();
+                            timer=new Timer();
+                            request(i+1);
+                        }
+                        Log.i("Mapa", "HOLA");
+                    }
+                });
+            }
+        },0,velocidad);
+    }
+    public void request(final int i){
+        if (i==Ruta.length){
+            return;
+        }
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/ActualizarViaje";
+
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+
+                        if (response.equals("1")){
+                            go2(i);
+                        }
+                        else{
+                            parsear(response,false);
+                            Toast.makeText(Carpooling.this,
+                                    response, Toast.LENGTH_LONG).show();
+                            go2(1);
+                        }
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Carpooling.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Pos", ""+Ruta[i-1]);
+                params.put("Carne",carne);
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    public void parsear(String response,boolean chofer){
         JsonParser parser = new JsonParser();
         JsonElement rootNode = parser.parse(response);
 
@@ -429,9 +432,12 @@ public class Carpooling extends AppCompatActivity {
         if (rootNode.isJsonObject()) {
             JsonObject details = rootNode.getAsJsonObject();
 
-            JsonElement conductor=details.get("Conductor");
-            this.conductor=conductor.getAsString();
-            guardarConductor();
+            if (chofer){
+                JsonElement conductor=details.get("Conductor");
+                this.conductor=conductor.getAsString();
+                guardarConductor();
+            }
+
 
             JsonArray RutaDetails = details.getAsJsonArray("Ruta");
 
