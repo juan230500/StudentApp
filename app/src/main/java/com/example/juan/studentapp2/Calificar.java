@@ -23,21 +23,30 @@ import java.util.Map;
 public class Calificar extends AppCompatActivity {
     private RatingBar Calificacion;
     private String conductor;
+    private boolean calificado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calificar);
+        Bundle extras=getIntent().getExtras();
+        calificado=extras.getBoolean("Calificado");
         abrirConductor();
         Calificacion = (RatingBar) findViewById(R.id.ratingBar);
     }
 
     public void enviarCalificacion(View view) {
-        Toast toast1 =
-                Toast.makeText(getApplicationContext(),
-                        "la puntuacion a enviar es de  " + Calificacion.getRating(), Toast.LENGTH_SHORT);
-        toast1.show();
-        enviar();
+        if(!calificado) {
+            Toast.makeText(getApplicationContext(),
+                    "la puntuacion a enviar es de  " + Calificacion.getRating(), Toast.LENGTH_SHORT).show();
+            enviar();
+            calificado=true;
+            Intent i=new Intent(getApplicationContext(),MainActivity.class);
+            i.putExtra("Calificado",calificado);
+        } else{
+            Toast.makeText(getApplicationContext(),
+                    "Ya se calificó este viaje.", Toast.LENGTH_SHORT).show();
+        }
 
     }
 

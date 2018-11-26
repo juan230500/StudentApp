@@ -9,6 +9,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private boolean registroCarnet=true;
     private boolean regsitroFacebook=true;
+    private boolean calificado=true;
     private String Carnet="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras=getIntent().getExtras();
         registroCarnet=extras.getBoolean("RegistroCarnet");
         regsitroFacebook=extras.getBoolean("RegistroFace");
+        calificado=extras.getBoolean("Calificado");
         Carnet=extras.getString("Carnet");
     }
 
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void calificar(View view){
         Intent i = new Intent(getApplicationContext(),Calificar.class);
+        i.putExtra("Calificado",calificado);
         startActivity(i);
     }
 

@@ -1,6 +1,7 @@
 package com.example.juan.studentapp2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -208,6 +209,8 @@ public class Carpooling extends AppCompatActivity {
 
 
     public void go( final int lugares[],final int tiempos[]) {
+        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+        i.putExtra("Calificado",false);
         posicionLugar=0;
         posActual=lugares[posicionLugar];
         y = botones[posActual].getY();
