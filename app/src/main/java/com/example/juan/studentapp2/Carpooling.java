@@ -1,6 +1,7 @@
 package com.example.juan.studentapp2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.PointF;
 import android.os.CountDownTimer;
 import android.os.Handler;

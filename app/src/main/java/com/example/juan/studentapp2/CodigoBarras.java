@@ -53,6 +53,8 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
                 scannerView.setResultHandler(this);
                 scannerView.startCamera();
                 registrado = true;
+                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                i.putExtra("RegistroCarnet",registrado);
             } else {
                 new AlertDialog.Builder(this)
                         .setTitle("Ya está registrado")
@@ -97,6 +99,12 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_codigo_barras);
+
+        Bundle extras=getIntent().getExtras();
+        registrado=extras.getBoolean("RegistroCarnet");
+        codigoBarras =extras.getString("Carnet");
+
+
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
