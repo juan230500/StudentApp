@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -90,6 +91,9 @@ public class Carpooling extends AppCompatActivity {
     private int[] Ruta;
     private int[] Tiempos;
     private int sumador;
+    private float xAcumulada;
+    private float ETAfinal;
+    private TextView tv1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,7 @@ public class Carpooling extends AppCompatActivity {
                 }
         );
         requestQueue.add(stringRequest);
+        tv1=findViewById(R.id.ETA);
         img=(Button)findViewById(R.id.buttonCarro);
         Button0=(Button)findViewById(R.id.button0);
         Button1=(Button)findViewById(R.id.button1);
@@ -304,6 +309,8 @@ public class Carpooling extends AppCompatActivity {
                             parsear(response,true);
                             x=botones[Ruta[0]].getX();
                             y=botones[Ruta[0]].getY();
+                            calcularXacumulada();
+                            Log.i("Carpooling", "aco: "+xAcumulada);
                             go2(1);
                         }
 
@@ -363,6 +370,8 @@ public class Carpooling extends AppCompatActivity {
                             y=x*m+b;
                             img.setX(x);
                             img.setY(y);
+                            xAcumulada-=2;
+                            tv1.setText("ETA= "+(xAcumulada)/ETAfinal);
                         }
                         else{
                             timer.cancel();
@@ -376,7 +385,16 @@ public class Carpooling extends AppCompatActivity {
             }
         },0,velocidad);
     }
-    public void request(final int i){
+    public void  calcularXacumulada() {
+        int pos = 0;
+        xAcumulada = 0;
+        while (pos < Ruta.length - 1) {
+            xAcumulada += Math.abs(botones[Ruta[pos]].getX() - botones[Ruta[pos + 1]].getX());
+            pos += 1;
+        }
+    }
+
+        public void request(final int i){
         if (i==Ruta.length){
             return;
         }
@@ -450,10 +468,11 @@ public class Carpooling extends AppCompatActivity {
             }
 
             JsonArray TiemposDetails = details.getAsJsonArray("Tiempos");
-
+            ETAfinal=0;
             for (int i = 0; i < TiemposDetails.size(); i++) {
                 JsonPrimitive value = TiemposDetails.get(i).getAsJsonPrimitive();
                 Tiempos[i]=value.getAsInt();
+                ETAfinal+=Tiempos[i];
             }
 
         }
