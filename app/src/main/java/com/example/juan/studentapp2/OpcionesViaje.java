@@ -11,7 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-
+/**
+ * Esta calse permite visualizar las opciones de viajes disponibles
+ */
 public class OpcionesViaje extends AppCompatActivity {
 
     private String viaje="20";
@@ -23,6 +25,9 @@ public class OpcionesViaje extends AppCompatActivity {
         setContentView(R.layout.activity_opciones_viaje);
         recibirDatos();
     }
+    /**
+     * Este método recibe los datos extras de validación
+     */
     public void recibirDatos(){
         Bundle extras=getIntent().getExtras();
         Carnet=extras.getString("Carnet");
@@ -37,6 +42,10 @@ public class OpcionesViaje extends AppCompatActivity {
             archivo_wr.close();
         } catch (IOException e){}
     }
+    /**
+     * Este método almacena en ficheros la opción de viaje con un estudiante cualquiera
+     * @param view
+     */
     public void guardarCE(View view){
         Toast.makeText(this, "Ha seleccionado viaje con un estudiante cualquiera.", Toast.LENGTH_SHORT).show();
         try {
@@ -49,6 +58,10 @@ public class OpcionesViaje extends AppCompatActivity {
         i.putExtra("Carnet",Carnet);
         startActivity(i);
     }
+    /**
+     * Este método almacena en ficheros la opción de viaje con amigo
+     * @param view
+     */
     public void guardarCA(View view){
         Toast.makeText(this, "Ha seleccionado viaje con un amigo.", Toast.LENGTH_SHORT).show();
         try {
@@ -61,6 +74,9 @@ public class OpcionesViaje extends AppCompatActivity {
         i.putExtra("Carnet",Carnet);
         startActivity(i);
     }
+    /**
+     * Este método lee el viaje escogido guardado en ficheros
+     */
     public void abrir(){
         try {
             InputStreamReader archivo_rd = new InputStreamReader(openFileInput("miviaje.txt"));

@@ -18,6 +18,9 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Esta clase corresponde a la pantalla en donde se visualiza la calificación del usuario
+ */
 public class Calificacion extends AppCompatActivity {
 
     private TextView txtv;
@@ -64,6 +67,9 @@ public class Calificacion extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Este método obtiene el carne registrado anteriormente utilizando ficheros
+     */
     public void abrir(){
         try {
             InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
@@ -72,6 +78,9 @@ public class Calificacion extends AppCompatActivity {
         } catch (IOException e){}
     }
 
+    /**
+     * Este método obtiene la calificación promedio proveniente del servidor al ingresar el carné
+     */
     public void getCalif (){
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
